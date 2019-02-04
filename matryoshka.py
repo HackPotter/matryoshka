@@ -37,12 +37,15 @@ def main(argv):
     if infile == "": # Exit if no infile is specified
         help()
         sys.exit(1)
-
+    
+    #THIS TAR STUFF IS JUST HERE FOR TESTING RIGHT NOW
+    #TODO: MOVE TO SEPERATE CLASS
     try:
         if debug: print ("Attempting to open {0} as tarfile".format(infile))
-        TarArchive = TarFile.open(infile)
-    except:
-       print ("Error: {0} is not a tarfile. Exiting.".format(infile)) 
+        TarArchive = tarfile.open(name=infile, mode='r')
+    except Exception as e:
+        print(e)
+        print ("Error: {0} is not a tarfile. Exiting.".format(infile)) 
 
 
 def help():

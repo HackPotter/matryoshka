@@ -1,9 +1,11 @@
 #!/usr/bin/python3
 
-import sys, getopt, tarfile, os
+import sys, getopt, tarfile, os, magic
+
+debug = None
 
 def main(argv):
-    
+    global debug
     debug = False #By default not in debug mode
     infile=""
     outfile=""
@@ -40,6 +42,7 @@ def main(argv):
     
     #THIS TAR STUFF IS JUST HERE FOR TESTING RIGHT NOW
     #TODO: MOVE TO SEPERATE CLASS
+    checkType(infile)
     try:
         if debug: print ("Attempting to open {0} as tarfile".format(infile))
         TarArchive = tarfile.open(name=infile, mode='r')
@@ -48,6 +51,13 @@ def main(argv):
         print ("Error: {0} is not a tarfile. Exiting.".format(infile)) 
 
 
+def checkType(archiveName): # Uses libmagic to determine filetype via path to file
+    archiveType = magic.from_file(archiveName, mime=True)
+    if debug: print ("File {0} found to be type {1}".format(archiveName, archiveType))
+    
+
+    
+#TODO: More in depth help page
 def help():
     print("Useage: matryoshka -i <Archive file in>")
 
